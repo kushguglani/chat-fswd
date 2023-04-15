@@ -1,0 +1,15 @@
+JWT (json web token)
+ diff authentication and authorization
+
+ authentication
+    (id pwd)
+    valid user or not
+
+authorization
+    after authentication
+    what you can access
+
+SocketIO
+bidirectional and event-based communication between a client and a server.
+
+npm i dotenv express mongoose cors socket.io bcryptjs
