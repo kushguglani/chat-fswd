@@ -21,3 +21,15 @@ model, schema in mongoose
 Collection
     User
     Conversation
+
+
+// 3rd Day
+
+Git hub  Link : https://github.com/kushguglani/chat-fswd
+
+
+open CMD
+git clone https://github.com/kushguglani/chat-fswd
+cd chat-fswd
+npm i
+npm run start

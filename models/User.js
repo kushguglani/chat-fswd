@@ -6,11 +6,12 @@ const UserSchema = new Schema(
     {
         name:{
             type:String,
-            require:true,
+            require:true
         },
         username:{
             type:String,
             require:true,
+            unique:true
         },
         password:{
             type:String,

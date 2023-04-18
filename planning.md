@@ -41,6 +41,26 @@ Routes
 
 
 username unique
-password
+    2 ways
+        1 unique:true
+        2 write own logic
+ecrypt password
+    bcrypt
+        salt and rounds
+            hash
+
 jwt token
+    sign
+        3 arg
+            token
 hide pwd
+    send only use ful information
+
+
+
+login api
+
+user list api
+
+
+-----------------------------------

@@ -18,6 +18,7 @@ const mongodbURI = process.env.MONGOOSE_URI;
 //middlewares
 // CORS middleware
 app.use(cors());
+
 // Body Parser middleware to parse request bodies
 app.use(
     bodyParser.urlencoded({
@@ -25,6 +26,7 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+
 // api routes
 app.use("/api/users", users);
 
@@ -40,8 +42,6 @@ const server = app.listen(port, () => {
 })
 
 const io = require('socket.io')(server);
-
-
 
 // Assign socket object to every request (middleware)
 app.use(function (req, res, next) {

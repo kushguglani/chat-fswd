@@ -13,3 +13,35 @@ SocketIO
 bidirectional and event-based communication between a client and a server.
 
 npm i dotenv express mongoose cors socket.io bcryptjs
+
+
+register user api
+    URL : localhost:5000/api/users/register
+    select post ,  raw , json
+    {
+        "name":"kush",
+        "username":"kg",
+        "password":"123456",
+        "password2":"123456"
+    }
+
+authentication
+    Validation
+    mongoose in built validation
+    seprate method for validation
+    validate in data base
+
+authorization
+JWT
+    JSON web token
+    (jawt, auth-token, x-auth-token)
+
+2 methods
+    jwt.sign( 3 things) craetion
+    3 things
+    object(data_object)
+    "secret_key"
+    // expires
+
+
+    jwt.verify()
