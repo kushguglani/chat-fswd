@@ -60,7 +60,35 @@ hide pwd
 
 login api
 
+-----------------------------------
 user list api
+    jwt verify
+    send all the user(Except login one)
 
+
+model
+    Coversation (old chat coversation)  
+        last person
+    Global 
+    Message (all messages)
 
 -----------------------------------
+api
+    send global message
+    send personal message
+    get global message list
+    get personal message
+    get conversation
+
+-----------------------------------
+
+
+4 and 5 class (node js done)
+
+
+6 and 7 class(react is done)
+
+8 class erveryone creatred there projec
+interview as a fresher 
+and experience
+resume update

@@ -6,12 +6,38 @@ const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login')
 const Users = require('../../models/User');
 
-// localhost:5000/api/user/register
+// localhost:5000/api/user/
 
 // app.post('/api/user/register',(req,res)=>{
 
 // })
 
+// verify user jwt
+// list of user except login
+router.get('/', async (req, res) => {
+    let token = req.headers.auth;
+    // token Bearer token......
+    // check token is present
+    if (!token) {
+        return res.status(400).json("unauthorized");
+    }
+    // validating token
+    let jwtUser = jwt.verify(token.split(' ')[1], process.env.SECRET_JWT);
+    console.log({ jwtUser });
+    // jwtUser is alooged in user
+    if (!jwtUser) {
+        return res.status(400).json("unauthorized");
+    }
+    let user = await Users.aggregate()
+        .match({ _id: { $not: { $eq: jwtUser.id } } })
+        .project({
+            password: 0,
+            date: 0,
+            __v: 0
+        })
+        .exec();
+    res.send(user)
+})
 
 router.post("/login", async (req, res) => {
     // debugging
