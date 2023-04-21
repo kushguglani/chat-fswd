@@ -80,6 +80,9 @@ api
     get personal message
     get conversation
 
+
+    all required validation
+
 -----------------------------------
 
 

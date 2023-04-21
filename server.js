@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 
 // own routes import
 const users = require("./routes/api/user")
+const messages = require("./routes/api/message");
 
 // constants 
 const app = express();
@@ -29,12 +30,12 @@ app.use(bodyParser.json());
 
 // api routes
 app.use("/api/users", users);
-
-
+app.use("/api/messages", messages);
 // localhost:5000/api/users/signup
 // localhost:5000/api/admin/signup
 // localhost:5000/api/message/
 // localhost:5000/api/users/
+
 
 // start server
 const server = app.listen(port, () => {
