@@ -17,7 +17,6 @@ router.use((req, res, next) => {
     }
     // validating token
     jwtUser = jwt.verify(token.split(' ')[1], process.env.SECRET_JWT);
-    console.log({ jwtUser });
     // jwtUser is alooged in user
     if (!jwtUser) {
         return res.status(400).json("unauthorized");
@@ -36,7 +35,6 @@ router.post("/global", async (req, res) => {
     )
     // req.io.sockets.emit('messages', req.body.message);
     let saveMessage = await message.save();
-    console.log(saveMessage);
     res.send(saveMessage)
 });
 
@@ -118,11 +116,10 @@ router.get('/conversationList', async (req, res) => {
 
 // get conversation list
 // from and to 
-router.get('/conversationByUser', async (req, res) => {
+router.get('/conversationByUser/query', async (req, res) => {
     let from = new mongoose.Types.ObjectId(jwtUser.id);
-    let to = new mongoose.Types.ObjectId(req.body.sender);
-
-    let conversationList = await Conversation.aggregate([
+    let to = new mongoose.Types.ObjectId(req.query.userId);
+    let conversationList = await Message.aggregate([
         {
             $lookup: {
                 from: 'users',
