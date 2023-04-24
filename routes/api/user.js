@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 
 router.post("/login", async (req, res) => {
     // debugging
-    console.log("login come ........")
+    // console.log("login come ........")
     // validation
     const { errors, isValid } = validateLoginInput(req.body);
     if (!isValid) {
@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
                         res.json({
                             success: true,
                             id: user._id,
-                            username: user.username,
+                            name: user.username,
                             token: "Bearer " + token
                         })
                     }))
@@ -81,58 +81,58 @@ router.post("/login", async (req, res) => {
 
 router.post('/register', async (req, res) => {
     // Form Validation
-    const { errors, isValid } = validateRegisterInput(req.body);
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
-    // Check validation
-    let user = await Users.findOne({ username: req.body.username });
-    console.log({ user })
-    if (user) {
-        return res.status(400).json("Username alredy exist");
-    }
-    const newUser = new Users({
-        name: req.body.name,
-        username: req.body.username,
-        password: req.body.password,
-    })
-    bcrypt.genSalt(Number(process.env.SALT_ROUNDS) || 10, function (err, salt) {
-        bcrypt.hash(req.body.password, salt, function (err, hash) {
-            console.log(hash);
-            console.log(req.body.password);
-            // Store hash in your password DB.
-            newUser.password = hash;
-
-
-            newUser.save().then(user => {
-                // authentication is done
-                // start authorization
-                // res.json(user)
-                const payload = {
-                    id: user._id,
-                    username: user.username
-                }
-                jwt.sign(
-                    payload,
-                    process.env.SECRET_JWT,
-                    {
-                        expiresIn: 31556926, // 1 year in seconds
-                    },
-                    (err, token) => {
-                        if (err) console.log(err)
-                        res.json({
-                            success: true,
-                            id: user._id,
-                            username: user.username,
-                            token: "Bearer " + token
-                        })
+    try {
+        const { errors, isValid } = validateRegisterInput(req.body);
+        if (!isValid) {
+            return res.status(400).json(errors);
+        }
+        // Check validation
+        let user = await Users.findOne({ username: req.body.username });
+        if (user) {
+            return res.status(400).json("Username alredy exist");
+        }
+        const newUser = new Users({
+            name: req.body.name,
+            username: req.body.username,
+            password: req.body.password,
+        })
+        bcrypt.genSalt(Number(process.env.SALT_ROUNDS) || 10, function (err, salt) {
+            bcrypt.hash(req.body.password, salt, function (err, hash) {
+                // Store hash in your password DB.
+                newUser.password = hash;
+                newUser.save().then(user => {
+                    // authentication is done
+                    // start authorization
+                    // res.json(user)
+                    const payload = {
+                        id: user._id,
+                        username: user.username
                     }
-                )
-            })
+                    jwt.sign(
+                        payload,
+                        process.env.SECRET_JWT,
+                        {
+                            expiresIn: 31556926, // 1 year in seconds
+                        },
+                        (err, token) => {
+                            if (err) console.log(err)
+                            req.io.sockets.emit("users", user.username);
+                            res.json({
+                                success: true,
+                                id: user._id,
+                                name: user.username,
+                                token: "Bearer " + token
+                            })
+                        }
+                    )
+                })
+            });
         });
-    });
 
-
+    }
+    catch (e) {
+        console.log(e);
+    }
 
 
 })
