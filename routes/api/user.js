@@ -1,5 +1,7 @@
 const express = require('express');
+// to hash (encrypy password etc) 
 const bcrypt = require('bcryptjs');
+//authorizaton
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const validateRegisterInput = require('../../validation/register');
@@ -86,7 +88,7 @@ router.post('/register', async (req, res) => {
         if (!isValid) {
             return res.status(400).json(errors);
         }
-        // Check validation
+        // Check validation for existing user (unique user name)
         let user = await Users.findOne({ username: req.body.username });
         if (user) {
             return res.status(400).json("Username alredy exist");
@@ -133,8 +135,6 @@ router.post('/register', async (req, res) => {
     catch (e) {
         console.log(e);
     }
-
-
 })
 
 module.exports = router;

@@ -117,9 +117,11 @@ router.get('/conversationList', async (req, res) => {
 
 // get conversation list
 // from and to 
+// get  => req.query
+// post => req.body
 router.get('/conversationByUser/query', async (req, res) => {
-    let from = new mongoose.Types.ObjectId(jwtUser.id);
-    let to = new mongoose.Types.ObjectId(req.query.userId);
+    let user1 = new mongoose.Types.ObjectId(jwtUser.id);
+    let user2 = new mongoose.Types.ObjectId(req.query.userId);
     let conversationList = await Message.aggregate([
         {
             $lookup: {
@@ -140,8 +142,8 @@ router.get('/conversationByUser/query', async (req, res) => {
     ])
         .match({
             $or: [
-                { $and: [{ to: to }, { from: from }] },
-                { $and: [{ to: from }, { from: to }] },
+                { $and: [{ to: user1 }, { from: user2 }] },
+                { $and: [{ to: user2 }, { from: user1 }] },
             ]
         })
         .project({
