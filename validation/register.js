@@ -10,10 +10,10 @@ module.exports = function validateRegisterInput(data) {
     else if (!(data.username)) {
         errors.username = 'Username field is required';
     }
-    else if(!mailformat.test(data.email)){
-        errors.message  = 'Inavalid email';
+    // else if(!mailformat.test(data.email)){
+    //     errors.message  = 'Inavalid email';
 
-    }
+    // }
     else if (!(data.password)) {
         errors.password = 'Password field is required';
     }
