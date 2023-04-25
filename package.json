@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server",
-    "start": "node server"
+    "start": "node server",
+    "client": "npm start --prefix client",
+    "project": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
     "NodeJs",
@@ -22,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^8.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
